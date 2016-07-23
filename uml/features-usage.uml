@@ -1,0 +1,60 @@
+@startuml
+class Usage << (F,orchid) >>  {
+ +day
+ +week
+ +year
+ +hour
+ +minute
+ +lat
+ +lng
+}
+class Value << (F,orchid) >> {
+ +value
+}
+Usage "1" -- "*" Value 
+class User << (D,#FF7700) >>  {
+ +id
+ +language
+}
+class Device << (D,#FF7700) >> {
+ +brand
+ +model
+}
+Device "1" -- "*" Usage
+User "1" - "*" Usage 
+class Feature << (D,#FF7700) >>
+class Application << (D,#FF7700) >>
+class Group << (D,#FF7700) >>
+class Property << (D,#FF7700) >>  {
+ +name
+}
+enum DeviceType {
+ +Tablet
+ +Smartphone
+ +PersonalComputer
+}
+interface TypeInterface {
+ +getType()
+}
+Device -> DeviceType
+Usage "*" - "1" Feature
+Feature "1" *-- "*" Group
+Group "1" -- "*" Value
+Value "*" - "1" Property
+Feature "1" *-- "*" Property
+Feature "*" - "1" Application
+Property -> TypeInterface
+TypeInterface <|.. Term
+TypeInterface <|.. Type
+class Taxonomy << (D,#FF7700) >>
+class Term << (D,#FF7700) >>
+class Type << (D,#FF7700) >>
+Taxonomy "1" *- "*" Term
+
+legend top left
+  <b>Dimension</b> is decorated with <b>D</b>
+  <b>Fact</b> is decorated with <b>F</b>
+  <b>Enum</b> is decorated with <b>E</b>
+  <b>Interface</b> is decorated with <b>I</b>
+endlegend
+@enduml
