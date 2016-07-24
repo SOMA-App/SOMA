@@ -22,9 +22,15 @@ class Device << (D,#FF7700) >> {
 }
 Device "1" -- "*" Usage
 User "1" - "*" Usage 
-class Feature << (D,#FF7700) >>
-class Application << (D,#FF7700) >>
-class Group << (D,#FF7700) >>
+class Feature << (D,#FF7700) >> {
+ +name
+}
+class Application << (D,#FF7700) >> {
+ +name
+}
+class Domain << (D,#FF7700) >> {
+ +name
+}
 class Property << (D,#FF7700) >>  {
  +name
 }
@@ -38,20 +44,22 @@ interface TypeInterface {
 }
 Device -> DeviceType
 Usage "*" - "1" Feature
-Feature "1" *-- "*" Group
-Group "1" -- "*" Value
+Feature "1" *-- "*" Domain
+Domain "1" -- "*" Value
 Value "*" - "1" Property
 Feature "1" *-- "*" Property
 Feature "*" - "1" Application
-Property -> TypeInterface
-TypeInterface <|.. Term
-TypeInterface <|.. Type
 class Taxonomy << (D,#FF7700) >>
 class Term << (D,#FF7700) >>
 class Type << (D,#FF7700) >>
-Taxonomy "1" *- "*" Term
+Property -> TypeInterface
+TypeInterface <|.. Taxonomy
+TypeInterface <|.. Type
+Term "*" *- "1" Taxonomy
 
 legend top left
+  <b>SOMA Star Schema</b>
+  
   <b>Dimension</b> is decorated with <b>D</b>
   <b>Fact</b> is decorated with <b>F</b>
   <b>Enum</b> is decorated with <b>E</b>
